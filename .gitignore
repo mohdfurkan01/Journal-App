@@ -16,6 +16,7 @@ target/
 *.yml
 *.log
 info.md
+application.properties
 
 
 ### IntelliJ IDEA ###
