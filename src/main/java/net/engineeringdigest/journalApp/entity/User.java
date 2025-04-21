@@ -25,6 +25,8 @@ public class User {
     @Indexed(unique = true) //userName will be unique
     @NonNull //userName can't be null
     private String userName;
+    private String email;
+    private boolean sentimentAnalysis;
     @NonNull //pwd can't be null
     private String password;
 

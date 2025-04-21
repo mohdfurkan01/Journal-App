@@ -1,9 +1,11 @@
 package net.engineeringdigest.journalApp.controller;
 
 
+import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import net.engineeringdigest.journalApp.service.UserService;
+import net.engineeringdigest.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,9 @@ public class UserController {
     //   return userService.getAll();
     //    }
 
+    @Autowired
+    private WeatherService weatherService;
+
     @PutMapping
     public ResponseEntity<?>updateUser(@RequestBody User user ){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -44,6 +49,17 @@ public class UserController {
         //userInDb.setPassword(passwordEncoder.encode(user.getPassword())); // ✅ Fix: Encode before saving
         userService.saveNewUser(userInDb);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> greeting(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWhether("Mumbai");
+        String greeting = "";
+        if(weatherResponse != null) {
+         greeting = "Weather feels like" + " " + weatherResponse.getCurrent().getFeelslike();
+        }
+        return new ResponseEntity<>( "Hii" + " " + authentication.getName() + " " + greeting , HttpStatus.OK);
     }
 
     @DeleteMapping
