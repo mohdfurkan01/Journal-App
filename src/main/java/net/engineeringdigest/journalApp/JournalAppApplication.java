@@ -10,11 +10,14 @@ import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestTemplate;
 
 
 //@SpringBootApplication(scanBasePackages = "net.engineeringdigest.journalApp")
+@EnableScheduling
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableMongoRepositories(basePackages = "net.engineeringdigest.journalApp.repository") // Add this
@@ -39,6 +42,10 @@ public class JournalAppApplication {
 	//add can be any name
 
 
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 }
 
 // PlatformTransactionManager
